@@ -168,6 +168,7 @@ public class AndroidRpcContext extends RpcContext<Context> {
         };
 
         VolleyRequest req = new VolleyRequest(request, onVolleyResponse, onVolleyErrorResponse);
+        mRequestQueue.getCache().clear();
         mRequestQueue.add(req);
     }
 

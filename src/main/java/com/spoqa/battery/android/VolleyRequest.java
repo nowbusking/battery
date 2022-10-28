@@ -40,6 +40,7 @@ public class VolleyRequest extends Request<ResponseDelegate> {
                     0,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         }
+        setShouldCache(false);
     }
 
     static private int translateVolleyHttpMethod(int method) {
