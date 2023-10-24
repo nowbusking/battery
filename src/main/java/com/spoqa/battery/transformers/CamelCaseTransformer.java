@@ -19,10 +19,10 @@ public class CamelCaseTransformer implements FieldNameTransformer {
 
     @Override
     public String encode(List<String> parts) {
-        if (parts.size() == 0)
+        if (parts.isEmpty())
             return "";
 
-        List<String> output = new ArrayList<String>();
+        List<String> output = new ArrayList<>();
 
         for (int i = 0; i < parts.size(); ++i) {
             if (i == 0)

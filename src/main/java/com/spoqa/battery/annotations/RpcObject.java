@@ -17,14 +17,14 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface RpcObject {
-    static final class NULL {}
+    final class NULL {}
 
-    public int method() default HttpRequest.Methods.GET;
-    public String uri() default "";
-    public Class requestSerializer() default NULL.class;
-    public Class localName() default NULL.class;
-    public Class remoteName() default NULL.class;
-    public Class context() default NULL.class;
-    public String expectedContentType() default "";
+    int method() default HttpRequest.Methods.GET;
+    String uri() default "";
+    Class requestSerializer() default NULL.class;
+    Class localName() default NULL.class;
+    Class remoteName() default NULL.class;
+    Class context() default NULL.class;
+    String expectedContentType() default "";
 
 }

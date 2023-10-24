@@ -67,7 +67,6 @@ public final class RequestFactory {
         HttpRequest request = new HttpRequest(method, uri);
         request.setNameTranslator(nameTranslator);
         request.putParameters(parameters);
-        request.setRequestObject(object);
 
         /* set request body */
         Class serializerCls = annotation.requestSerializer();

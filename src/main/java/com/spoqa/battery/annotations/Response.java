@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.FIELD})
 public @interface Response {
 
-    public boolean required() default false;
-    public String value() default "";
+    boolean required() default false;
+    String value() default "";
 
 }

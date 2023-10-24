@@ -9,23 +9,11 @@ import java.util.List;
 
 public final class StringUtils {
 
-    public static interface StringTransformer {
-        public String transform(String input);
+    public interface StringTransformer {
+        String transform(String input);
     }
 
-    public static StringTransformer toUpperTransformer = new StringTransformer() {
-        @Override
-        public String transform(String input) {
-            return input.toUpperCase();
-        }
-    };
-
-    public static StringTransformer toLowerTransformer = new StringTransformer() {
-        @Override
-        public String transform(String input) {
-            return input.toLowerCase();
-        }
-    };
+    public static final StringTransformer toLowerTransformer = String::toLowerCase;
 
     public static String join(List<String> array, String delimiter, StringTransformer transformer) {
         StringBuilder sb = new StringBuilder();
@@ -50,7 +38,7 @@ public final class StringUtils {
     }
 
     public static List<String> splitByCase(String input) {
-        List<String> output = new ArrayList<String>();
+        List<String> output = new ArrayList<>();
 
         boolean isUppercase = false;
         boolean isDigit = false;
@@ -65,7 +53,7 @@ public final class StringUtils {
 
             if (Character.isDigit(c)) {
                 isDigit = true;
-            } else if (isDigit & !Character.isDigit(c)) {
+            } else if (isDigit && !Character.isDigit(c)) {
                 output.add(input.substring(startIndex, i - 1));
                 startIndex = i - 1;
                 isDigit = false;
