@@ -95,15 +95,17 @@ public class AndroidRpcContext extends RpcContext<Context> {
             try {
                 /* force content type if declared by RpcObject */
                 String contentType = rpcObjectDecl.expectedContentType();
-                if (contentType == null || contentType.length() == 0)
+                if (contentType == null || contentType.length() == 0) {
                     contentType = s.contentType();
+                }
                 ObjectBuilder.build(contentType, s.data(),
                         rpcObject, nameTranslator, getTypeAdapters());
 
                 if (getResponseValidator() != null) {
                     Object responseObject = CodecUtils.getResponseObject(null, rpcObject, false);
-                    if (responseObject == null)
+                    if (responseObject == null) {
                         responseObject = rpcObject;
+                    }
                     getResponseValidator().validate(responseObject);
                 }
                 onResponse.onResponse(rpcObject);
@@ -112,7 +114,9 @@ public class AndroidRpcContext extends RpcContext<Context> {
                     onResponse.onFailure(e);
                 }
             } catch (RpcException e) {
-                e.printStackTrace();
+                if (!dispatchErrorHandler(currentContext, e)) {
+                    onResponse.onFailure(e);
+                }
             } catch (DeserializationException e) {
                 if (!dispatchErrorHandler(currentContext, e))
                     onResponse.onFailure(e);
