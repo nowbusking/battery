@@ -4,9 +4,6 @@
 
 package com.spoqa.battery;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -14,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HttpRequest {
-    static final private String TAG = "HttpRequest";
+    private static final String TAG = "HttpRequest";
 
     public static final class Methods {
         public static final int GET = 1;
@@ -26,52 +23,23 @@ public class HttpRequest {
     public static final String HEADER_ACCEPT = "Accept";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
 
-    private int mMethod;
-    private String mUri;
-    private Map<String, String> mHeaders;
-    private Map<String, Object> mParams;
+    private final int mMethod;
+    private final String mUri;
+    private final Map<String, String> mHeaders;
+    private final Map<String, Object> mParams;
     private byte[] mRequestBody;
     private FieldNameTranslator mFieldNameTranslator;
-    private Object mRequestObject;
     private String mContentType;
-
-    public HttpRequest(String uri) {
-        mMethod = Methods.GET;
-        mUri = uri;
-        mHeaders = new HashMap<String, String>();
-        mParams = new HashMap<String, Object>();
-    }
 
     public HttpRequest(int method, String uri) {
         mMethod = method;
         mUri = uri;
-        mHeaders = new HashMap<String, String>();
-        mParams = new HashMap<String, Object>();
+        mHeaders = new HashMap<>();
+        mParams = new HashMap<>();
     }
 
     public void setRequestBody(byte[] body) {
         mRequestBody = body;
-    }
-
-    public void setRequestBody(InputStream inputStream) {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-        int nRead;
-        byte[] data = new byte[8192];
-
-        try {
-            while ((nRead = inputStream.read(data, 0, data.length)) != 1)
-                buffer.write(data, 0, nRead);
-            buffer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        mRequestBody = buffer.toByteArray();
-    }
-
-    public void setRequestObject(Object requestObject) {
-        mRequestObject = requestObject;
     }
 
     public void setContentType(String contentType) {
@@ -82,22 +50,9 @@ public class HttpRequest {
         mHeaders.put(key, value);
     }
 
-    public void putParameter(String key, Object value) {
-        mParams.put(key, value);
-    }
-
     public void putParameters(Map<String, Object> params) {
         for (String key : params.keySet())
             mParams.put(key, params.get(key));
-    }
-
-    public void removeHeader(String key) {
-        mHeaders.remove(key);
-    }
-
-    public void removeParameter(String key) {
-        if (mParams.containsKey(key))
-            mParams.remove(key);
     }
 
     public void setNameTranslator(FieldNameTranslator fieldNameTranslator) {
@@ -167,10 +122,6 @@ public class HttpRequest {
         }
 
         return true;
-    }
-
-    public Object getRequestObject() {
-        return mRequestObject;
     }
 
 }
