@@ -76,7 +76,4 @@ public final class StringUtils {
         return output;
     }
 
-    public static boolean isNotEmpty(String str) {
-        return str != null && !str.isEmpty();
-    }
 }
